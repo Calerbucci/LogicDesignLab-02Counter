@@ -43,32 +43,29 @@ module lab2_1test(
        else if(en == 1'b1) begin
             if(load == 1'b0) begin 
               case(dir) 
-              1'b1: begin
-                if(out < 4'b1100) begin
-                    out = out + 1;
-                end
-                else if(out > 4'b1100) begin
-                out = 4'b1111;
-                end
-                else if(out == 4'b1100) begin
-                out = 4'b1100;
-                end
-              end
-               1'b0: begin
-                if(out > 4'b0000) begin
-                    out = out - 1;
-                end
-                else if(out == 4'b0000) begin
-                out = 4'b0000;
-                end
-              end
+                     1'b1: begin
+                       if(out < 4'b1100) 
+                           out = out + 1;
+                       else if(out == 4'b1111)
+                           out = 4'b1111;
+                       else if(out == 4'b1100) 
+                       out = 4'b1100;   
+                     end
+                     1'b0: begin
+                       if(out > 4'b0000) 
+                           out = out - 1
+                       else if(out == 4'b0000) 
+                           out = 4'b0000;   
+                     end
               endcase
             end
             else if(load == 1'b1) begin
-                out = data;
-            end
-      end      
-     end
-        
+                   if(data > 4'b1100)
+                          out = 4'b1111;
+                   else
+                          out = data;
+           end
+        end      
+      end
     end
 endmodule
