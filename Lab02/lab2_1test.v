@@ -53,7 +53,9 @@ module lab2_1test(
                      end
                      1'b0: begin
                        if(out > 4'b0000) 
-                           out = out - 1
+                           out = out - 1;
+                        else if(out == 4'b1111)
+                           out = 4'b1111;
                        else if(out == 4'b0000) 
                            out = 4'b0000;   
                      end
