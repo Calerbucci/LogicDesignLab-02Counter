@@ -30,7 +30,7 @@ module lab2_1test(
        output [3:0] out
     );
     
-    reg [3:0] out;
+    reg [3:0] out=0;
     
     always@(negedge clk) begin
        if(rst == 1'b1) begin

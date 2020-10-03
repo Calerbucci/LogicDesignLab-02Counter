@@ -28,8 +28,7 @@ module lab2_1_testbench;
   lab2_1test counter (.clk(clk), .rst(rst), .en(en), .dir(dir), .load(load),.data(data), .out(out));
   initial clk = 0;
    always #5 clk = ~clk;
-    // add your testbench here
-    // add more parameters if you need 
+   
      always @(posedge rst) begin
             if (rst) 
                 number_count <= 4'b0000;  
@@ -43,9 +42,16 @@ module lab2_1_testbench;
          dir = 1'b1;
          load = 1'b0;
          en = 1'b0;
+        number_count = 4'b0;
+        
      
      $display("Starting the simulation");
      
+     
+        #40 
+        en=1;
+        dir=1;
+        rst=1;
      
      
      
@@ -61,7 +67,29 @@ module lab2_1_testbench;
     end
     
     always@(negedge clk) begin
-        
+        if(en == 1'b1 && load ==1'b1) begin
+            number_count <= data;
+        end
+        else if(en ==1'b1 && load == 1'b0) begin
+             case(dir) 
+                     1'b1: begin
+                       if(number_count < 4'b1100) 
+                           number_count <= number_count + 1;
+                       else if(number_count == 4'b1111)
+                           printerror;
+                       else if(number_count == 4'b1100) 
+                           number_count <= 4'b1100;   
+                     end
+                     1'b0: begin
+                       if(number_count > 4'b0000) 
+                           number_count <= number_count - 1;
+                        else if(number_count == 4'b1111)
+                          printerror;
+                       else if(number_count == 4'b0000) 
+                           number_count <= 4'b0000;   
+                     end
+              endcase
+        end
     end
      
      
@@ -76,7 +104,7 @@ task test;
   task printerror;
     begin
       pass = 1'b0;
-      $display($time," Error");
+      $display($time," This is an incorrect input");
     end
   endtask
     
