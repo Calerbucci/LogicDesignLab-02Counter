@@ -23,24 +23,25 @@
 module lab_2_2fib(
      input clk, 
      input rst, 
-     output [7:0] fn 
+     output [19:0] fn 
     );
     
-    reg [7:0] fn;
-    reg [7:0] f1,f2 = 8'b00000001;
+    reg [7:0] temp;
+    reg [7:0] f1 = 8'b00000001;
+    reg [7:0] f2 =8'b00000001;
     integer i;
     
     
     always@(posedge clk) begin
-        if(rst == 1'b1) fn = 8'b00000001;
+        if(rst == 1'b1) temp = 8'b00000001;
         else begin
             for ( i=3; i<=13; i=i+1) begin
-                fn = f1+f2;
+                temp = f1+f2;
                 f1 = f2;
-                f2= fn;
+                f2= temp;
             end
         end
         
     end
-    
+    assign fn = temp;
 endmodule

@@ -30,44 +30,47 @@ module lab2_1test(
        output [3:0] out
     );
     
-    reg [3:0] out=0;
+reg [3:0] temp =0;
     
     always@(negedge clk) begin
        if(rst == 1'b1) begin
-      out = 4'b0000;
+      temp = 4'b0000;
       end
      else begin
        if(en == 1'b0) begin
-      out = out;
+      temp = temp;
       end 
        else if(en == 1'b1) begin
             if(load == 1'b0) begin 
               case(dir) 
                      1'b1: begin
-                       if(out < 4'b1100) 
-                           out = out + 1;
-                       else if(out == 4'b1111)
-                           out = 4'b1111;
-                       else if(out == 4'b1100) 
-                           out = 4'b1100;   
+                       if(temp < 4'b1100) 
+                           temp = temp + 1;
+                       else if(temp == 4'b1111)
+                           temp = 4'b1111;
+                       else if(temp == 4'b1100) 
+                           temp = 4'b1100;   
                      end
                      1'b0: begin
-                       if(out > 4'b0000) 
-                           out = out - 1;
-                        else if(out == 4'b1111)
-                           out = 4'b1111;
-                       else if(out == 4'b0000) 
-                           out = 4'b0000;   
+                       if(temp > 4'b0000) 
+                           temp = temp - 1;
+                        else if(temp == 4'b1111)
+                           temp = 4'b1111;
+                       else if(temp == 4'b0000) 
+                           temp = 4'b0000;   
                      end
               endcase
             end
             else if(load == 1'b1) begin
                    if(data > 4'b1100)
-                          out = 4'b1111;
+                          temp = 4'b1111;
                    else
-                          out = data;
+                          temp = data;
            end
         end      
       end
     end
+    
+   assign out = temp;
+   
 endmodule
